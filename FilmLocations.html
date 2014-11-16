@@ -14,11 +14,38 @@
         <a id="nav" href="../LoLLookup.html" >LoL Lookup</a>
         <a id="nav" class = "active">SF Film Locations</a>
 	<hr>
-	<center>
-		<div id="map_canvas">
-			
-		</div>
-	</center>
+	<div id = "container">
+	<div id = "filterLocForm">
+	<form name = "filterForm" id = "lookForm">
+                <h3><b>Filters:</b> </h3>
+		<input type = "radio" name= "filter" value = "title">Title<br>
+		<input type = "radio" name= "filter" value = "release_year">Year Released<br>
+		<input type = "radio" name= "filter" value = "locations">Locations<br>
+		<input type = "radio" name= "filter" value = "fun_facts">Fun Facts<br>
+		<input type = "radio" name= "filter" value = "production_company">Production Company<br>
+		<input type = "radio" name= "filter" value = "distributor">Distributor<br>
+		<input type = "radio" name= "filter" value = "director">Director<br>
+		<input type = "radio" name= "filter" value = "writer">Writer<br>
+		<input type = "radio" name= "filter" value = "actor_1">Actor 1<br>
+		<input type = "radio" name= "filter" value = "actor_2">Actor 2<br>
+		<input type = "radio" name= "filter" value = "actor_3">Actor 3<br>
+		<input type= "text" name= "filterVal" placeHolder = "KireiAutumn"/></td></tr>
+		<input type= "text" name= "hide" style = "display:none;"/>
+                <input type= "button" value= "Submit" onClick = "onClickLookup()" />
+
+	<!--	<table>
+                <tr><td>Title:</td><td><input type= "text" name= "sumName" placeHolder = "KireiAutumn"/></td></tr>
+		<tr><td>Year Released:</td><td><input type= "text" name= "sumName" placeHolder = "KireiAutumn"/></td></tr> 
+		<input type= "text" name= "hide" style = "display:none;"/>
+                <input type= "button" value= "Submit" onClick = "onClickLookup()" />
+		</table> -->
+        
+	</div>
+	</form>
+	<div id="map_canvas">	
+	</div>
+	
+	</div>
 	<hr>
 	Space Provided By <a href="http://www.he.net">Hurricane	Electric</a>
 </body>

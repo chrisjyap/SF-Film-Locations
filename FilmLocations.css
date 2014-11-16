@@ -2,4 +2,16 @@
 width: 600px;
 height: 500px;
 background-color: #CCC;
+position:relative;
+display: inline-block;
+vertical-align: top;
+width:37%;
+}
+
+#filterLocForm{
+position: relative;
+display: inline-block;
+width: 30%;
+margin-right: 50px;
+vertical-align: top;
 }
