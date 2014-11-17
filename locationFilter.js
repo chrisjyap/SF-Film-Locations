@@ -41,7 +41,7 @@ function onClickLookup(){
 		dataType:"json",
 		success: function(data){
 			console.log(JSON.stringify(data));
-			if(data.length >0) getLocations(JSON.stringify(data));
+			if(data.length >0) getLocations(data);
 		},	
 		error: function(req, status, err){
 			console.log("Yeah, no. ", status, err);
@@ -55,5 +55,25 @@ function buildURL(baseURL, filter, filterVal){
 }
 
 function getLocations(data){
-	console.log("Get locations: " + data);
+	var locations = [];
+	for(var i = 0; i<data.length; i++){
+		locations.push(data[i].locations);
+	}
+	var test= {
+		girl: "Jung Eunji",
+		guy: "Chris Yap"
+	};
+	console.log(locations);
+	$.ajax( 'http://64.71.177.103:8001' , {
+                type: 'GET',
+                data: {locations:locations},
+                dataType:"json",
+                success: function(data){
+                        console.log(JSON.stringify(data));
+                },
+                error: function(req, status, err){
+                        console.log("Yeah, no. ", status, err);
+                }
+        });
+
 }
