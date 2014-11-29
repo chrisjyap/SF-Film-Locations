@@ -46,7 +46,7 @@ var __request = function (urls, callback) {
  			body = JSON.parse(body);
 			
 			//if(body.results.length>0) results[response.request.href] = body.results[0]['formatted_address'];
-			if(body.results.length>0) results[response.request.href] = body.results[0]['geometry']['location']['lat'] + ", "+ body.results[0]['geometry']['location']['lng']; //{ error: error, response: response, body: body };
+			if(body.results.length>0) results[response.request.href] = body.results[0]['geometry']['location']['lat'] + ","+ body.results[0]['geometry']['location']['lng']; //{ error: error, response: response, body: body };
 			else results[response.request.href] = '';
 			
 			if (++c === urls.length) { callback(results); }
@@ -68,11 +68,12 @@ function somethingRequest(locations, res){
 	__request(urls, function(response){
 		var results={};
 		for(var i = 0; i<urls.length; i++){
-			console.log("WORK: "+ response[urls[i]]);
-			results[i] = response[urls[i]];
+			//console.log("WORK: "+ response[urls[i]]);
+			if(typeof(response[urls[i]]) != 'undefined') results[i] = response[urls[i]];
+			else results[i] = '';	
 		}
 		console.log(results);
-		console.log(response);
+		//console.log(response);
                 res.header('Access-Control-Allow-Origin', 'http://64.71.177.103');
                 res.send(results);
       	});
