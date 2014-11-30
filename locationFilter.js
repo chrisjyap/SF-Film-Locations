@@ -1,9 +1,9 @@
-var BASE_URL = "http://data.sfgov.org/resource/yitu-d5am.json?";
+const BASE_URL = "http://data.sfgov.org/resource/yitu-d5am.json?";
 
 $(document).ready(function(){
 	google.maps.event.addDomListener(window, 'load', initialize);
 
-	$("filterVal").keypress(function(event) {
+	$("input").keypress(function(event) {
                 if (event.which == 13)  onClickLookup();
         });
 });
@@ -11,7 +11,7 @@ $(document).ready(function(){
 function initialize(){
 	var mapCanvas = document.getElementById('map_canvas');
 	var mapOptions= {
-		center: new google.maps.LatLng(37.75161126, -122.4463385),
+		center: new google.maps.LatLng(37.76161126, -122.4263385),
 		zoom: 12,
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 		//draggable: false,
@@ -30,17 +30,18 @@ function initialize(){
 
 function onClickLookup(){
 	//TODO: add validation
+	document.getElementById("body").style.cursor= "progress";
 	var filter = document.querySelector('input[name="filter"]:checked').value;
-	var filterVal = (document.filterForm.filterVal.value).toLowerCase().replace(/ /g,'');
+	var filterVal = (document.filterForm.filterVal.value).toLowerCase(); //.replace(/ /g,'');
 	//console.log( buildURL(BASE_URL, filter, filterVal) );
 	$.ajax( buildURL(BASE_URL, filter, filterVal) , {
 		type: 'GET',
 		dataType:"json",
 		success: function(data){
-			if(data.length >0) getLocations(data);
+	 	       if(data.length >0) getLocations(data);
 		},	
 		error: function(req, status, err){
-			console.log("Yeah, no. ", status, err);
+		       console.log("Yeah, no. ", status, err);
 		}
 	});
 
@@ -63,9 +64,11 @@ function getLocations(data){
                 dataType:"json",
                 success: function(response){
                         //console.log(JSON.stringify(response));
+		        document.getElementById("body").style.cursor= "default";
 			makeMarkers(data, response);
                 },
                 error: function(req, status, err){
+		        document.getElementById("body").style.cursor= "default";
                         console.log("Yeah, no. ", status, err);
                 }
         });
@@ -89,21 +92,19 @@ function makeMarkers(data, response){
 			long.push(NaN);
 		}
 	}
-	//console.log(""+lat);
-	//console.log(""+long);
 // Clear make of previous markers	
 	var mapCanvas = document.getElementById('map_canvas');
         mapCanvas.innerHTML = "";
         //mapCanvas= null;
 	var mapOptions= {
-                center: new google.maps.LatLng(37.75161126, -122.4463385),
+                center: new google.maps.LatLng(37.76161126, -122.4263385),
                 zoom: 12,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
         }
 	var map = new google.maps.Map(mapCanvas, mapOptions);
 	
 // Markers
-	var infowindow = new google.maps.InfoWindow;//({ maxWidth:1000 });
+	var infowindow = new google.maps.InfoWindow({ maxWidth:300 });
 	var j, info, marker, movieInfo;
 	
 	for(j = 0; j< length; j++){
@@ -122,10 +123,16 @@ function makeMarkers(data, response){
 }
 
 function getMovieInfo(data, j){
-	return '<b>Movie: </b>' + data[j].title + 
+	var info = '<b>Movie: </b>' + data[j].title + 
+		'<br><b>Director: </b>' + data[j].director + 
 		'<br><b>Released: </b>' + data[j].release_year + 
-		'<br><b>Location: </b>' + data[j].locations; 
-
+		'<br><b>Location: </b>' + data[j].locations + 
+		'<br><b>Starring: </b><br>' + 
+		'<ul><li>' + data[j].actor_1;
+	if(typeof(data[j].actor_2) == 'undefined' && typeof(data[j].actor_3) != 'undefined') info += '</li><li>' + data[j].actor_3 + '</li></ul>';
+ 	else if(typeof(data[j].actor_3) != 'undefined') info+= '</li><li>' + data[j].actor_2 +'</li><li>' + data[j].actor_3 + '</li></ul>';
+	else info += '</li></ul>';
+	return info;
 }
 
 function bindInfoWindow(marker, map, infowindow, info){

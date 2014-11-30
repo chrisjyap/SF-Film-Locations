@@ -1,22 +1,27 @@
 #map_canvas{
-width: 600px;
-height: 500px;
-background-color: #CCC;
-position:relative;
-display: inline-block;
-vertical-align: top;
-width:37%;
+ width: 600px;
+ height: 500px;
+ background-color: #CCC;
+ position:relative;
+ display: inline-block;
+ vertical-align: top;
+ width:37%;
 }
 
 #filterLocForm{
-position: relative;
-display: inline-block;
-width: 30%;
-margin-right: 50px;
-vertical-align: top;
+ position: relative;
+ display: inline-block;
+ width: 30%;
+ margin-right: 50px;
+ vertical-align: top;
 }
 
 #infoWin{
-width: 175px;
-height: 125px;
+ width: 175px;
+ height: 185px;
+}
+
+.gm-style-iw div{
+ overflow:hidden !important;
+ line-height:1.1;
 }
