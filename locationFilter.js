@@ -127,11 +127,15 @@ function getMovieInfo(data, j){
 		'<br><b>Director: </b>' + data[j].director + 
 		'<br><b>Released: </b>' + data[j].release_year + 
 		'<br><b>Location: </b>' + data[j].locations + 
-		'<br><b>Starring: </b><br>' + 
-		'<ul><li>' + data[j].actor_1;
-	if(typeof(data[j].actor_2) == 'undefined' && typeof(data[j].actor_3) != 'undefined') info += '</li><li>' + data[j].actor_3 + '</li></ul>';
- 	else if(typeof(data[j].actor_3) != 'undefined') info+= '</li><li>' + data[j].actor_2 +'</li><li>' + data[j].actor_3 + '</li></ul>';
-	else info += '</li></ul>';
+		'<br><b>Starring: </b><br>' + '<ul><li>';
+	if(typeof(data[j].actor_1) != 'undefined'){
+		if(typeof(data[j].actor_2) == 'undefined' && typeof(data[j].actor_3) != 'undefined') info += data[j].actor_1 + '</li><li>' + data[j].actor_3 + '</li></ul>';
+ 		else if(typeof(data[j].actor_3) != 'undefined') info+= data[j].actor_1 +'</li><li>' + data[j].actor_2 +'</li><li>' + data[j].actor_3 + '</li></ul>';
+		else info += data[j].actor_1 + '</li></ul>';
+	}
+	else{
+		info+= 'None Listed</li></ul>';
+	}
 	return info;
 }
 
